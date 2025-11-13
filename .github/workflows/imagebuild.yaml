@@ -11,8 +11,8 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     env : 
-      AWS_ACCESS_KEY_ID: ${{secrets.secret_key}}
-      AWS_SECRET_ACCESS_KEY: ${{secrets.access_key}}
+      AWS_ACCESS_KEY_ID: ${{secrets.access_key}}
+      AWS_SECRET_ACCESS_KEY: ${{secrets.secret_key}}
       AWS_DEFAULT_REGION: "ap-southeast-2"
       PACKER_VERSION: "1.14.2"
 
