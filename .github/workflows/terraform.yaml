@@ -13,21 +13,25 @@ jobs:
       AWS_DEFAULT_REGION: "ap-southeast-2"
       PACKER_VERSION: "1.14.2"
 
+
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Format
-        run: terraform fmt -check
+        run: terraform -chdir=terraform fmt -check
 
       - name: Terraform Init
-        run: terraform init -backend=false
+        run: terraform -chdir=terraform init
 
       - name: Terraform Validate
-        run: terraform validate
-      
+        run: terraform -chdir=terraform validate
+
+      - name: Terraform Plan
+        run: terraform -chdir=terraform plan
+
       - name: Terraform Apply
         run: terraform -chdir=terraform apply -auto-approve
