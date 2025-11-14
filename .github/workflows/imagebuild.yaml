@@ -1,0 +1,33 @@
+---
+
+name: git actions
+
+on:
+  workflow_dispatch:
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    env : 
+      AWS_ACCESS_KEY_ID: ${{secrets.access_key}}
+      AWS_SECRET_ACCESS_KEY: ${{secrets.secret_key}}
+      AWS_DEFAULT_REGION: "ap-southeast-2"
+      PACKER_VERSION: "1.14.2"
+
+    steps:
+      - name: Checkout private repo
+        uses: actions/checkout@v5
+
+      - name: Set up Packer
+        uses: hashicorp/setup-packer@main
+        with:
+          version: latest
+              
+      - name: Packer Init
+        run: |
+          cd packer
+          packer init .
+      
+      - name: Packer Build
+        run: |
+          cd packer
+          packer build .
