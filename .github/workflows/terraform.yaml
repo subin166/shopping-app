@@ -29,19 +29,5 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
       
-
-      - name: Apply only if changes detected
-        if: ${{ steps.tfplan.outputs.plan_exitcode == '2' }}
-        run: |
-          echo "Changes detected by terraform plan — applying..."
-          terraform -chdir=terraform apply -input=false -auto-approve tfplan
-
-      - name: Skip apply if no changes
-        if: ${{ steps.tfplan.outputs.plan_exitcode == '0' }}
-        run: echo "No changes detected — skipping apply."
-
-      - name: Fail if plan errored
-        if: ${{ steps.tfplan.outputs.plan_exitcode == '1' }}
-        run: |
-          echo "Terraform plan failed (exit code 1). See plan.out above."
-          exit 1
+      - name: Terraform Apply
+        run: terraform -chdir=terraform apply -auto-approve
